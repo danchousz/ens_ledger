@@ -1,0 +1,15 @@
+Quarter,From,To,Symbol,Value,DOT_USD
+2020 Q1,ENS Multisig,Root Multisig,ETH,2272.253830454384,506962.55211267766
+2020 Q1 Unspent,Root Multisig,Root Multisig,ETH,2272.253830454384,10794455.434265075
+2020 Q1 Unspent,Root Multisig,Root Multisig,USDC,0.0,0.0
+2021 Q2,Old ETH Registrar Controller,Root Multisig,ETH,6677.003072316199,25447995.039488006
+2021 Q2,SushiSwap,Root Multisig,USDC,12482019.311236,12496101.55
+2021 Q2,Root Multisig,SushiSwap,ETH,-4400.0,-12492421.88
+2021 Q2,Root Multisig,Gitcoin Multisig,ETH,-180.0,-752630.3999999999
+2021 Q2 Unspent,Root Multisig,Root Multisig,ETH,4369.256902770583,20756373.379456796
+2021 Q2 Unspent,Root Multisig,Root Multisig,USDC,12482019.311236,12482019.311236
+2021 Q4,Root Multisig,DAO Wallet,ETH,-4369.256902770583,-19436595.63940591
+2021 Q4,Root Multisig,DAO Wallet,USDC,-10318098.311236,-10302183.2
+2021 Q4,Root Multisig,Cold Wallet (ENS Labs),USDC,-2163921.0,-2165069.51
+2021 Q4 Unspent,Root Multisig,Root Multisig,ETH,0.0,0.0
+2021 Q4 Unspent,Root Multisig,Root Multisig,USDC,0.0,0.0
