@@ -24,7 +24,7 @@ wallet_folders = { # Only Main ENS Wallets needed
     if wallet[1] in ["Treasury Consolidator", "Payment Account"]}
 
 # A block is processed in 10 seconds, which is two seconds faster than creating a new one. If there is a lag, we can add async
-block_number = 19647183
+block_number = 'latest'
 block = w3.eth.get_block(block_number, full_transactions=True)
 date = datetime.utcfromtimestamp(block.timestamp).strftime('%Y-%m-%d %H:%M:%S')
 
