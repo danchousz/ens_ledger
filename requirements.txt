@@ -1,0 +1,5 @@
+python=3.12.3
+pip=24.0
+web3py=6.7.12
+datetime=5.5
+os=2.1.4
