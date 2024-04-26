@@ -56,7 +56,7 @@ So we have everything for visualization.
 2) Transaction parties, which will allow identifying nodes.
 3) Names of assets, which will allow us to create various flows and track the movements of the tokens of interest.
 4) The cumulative amount at the time of transfers, which will create the USD mode.
-5) Interquarter balances, which will allow us to connect your wallet with yourself when moving between quarters.
+5) Interquarter balances, which will allow us to connect the wallet with itself when moving between quarters.
 
 ###### *USDCx transactions are not needed, since DAO Wallet transfers USDC to Superfluid, and distribution between specific service providers is performed using stream_grouper (more details below).
 
