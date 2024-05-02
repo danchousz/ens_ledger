@@ -1,4 +1,4 @@
-Quarter,From,To,Symbol,Value,DOT_USD
+Quarter,From_category,To_category,Symbol,Value,DOT_USD
 2022 Q2,DAO Wallet,Ecosystem,USDC,377500.0,380359.37
 2022 Q2,DAO Wallet,Ecosystem,ENS,6500.0,116788.62
 2022 Q2,DAO Wallet,Ecosystem,ETH,6.0,19696.68
@@ -131,7 +131,8 @@ Quarter,From,To,Symbol,Value,DOT_USD
 2024 Q1,Ecosystem,Grants,USDC,-120000.0,-120000.0
 2024 Q1,Ecosystem,IRL,USDC,-50000.0,-50000.0
 2024 Q1,Ecosystem,Newsletter,USDC,-9000.0,-9000.0
-2024 Q1,Ecosystem,Support,USDC,-4060.0,-4060.0
+2024 Q1,Ecosystem,Support,USDC,-2560.0,-2560.0
+2024 Q1,Ecosystem,Discord Support,USDC,-1500.0,-1500.0
 2024 Q1 Unspent,Ecosystem,Ecosystem,USDC,474614.23068599997,474614.23068599997
 2024 Q1 Unspent,Ecosystem,Ecosystem,ETH,173.45743450762495,610344.6748019799
 2024 Q1 Unspent,Ecosystem,Ecosystem,ENS,25436.0,551706.8400000001

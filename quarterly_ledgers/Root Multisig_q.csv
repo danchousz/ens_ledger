@@ -1,4 +1,4 @@
-Quarter,From,To,Symbol,Value,DOT_USD
+Quarter,From_category,To_category,Symbol,Value,DOT_USD
 2020 Q1,ENS Multisig,Root Multisig,ETH,2272.253830454384,506962.55211267766
 2020 Q1 Unspent,Root Multisig,Root Multisig,ETH,2272.253830454384,10794455.434265075
 2020 Q1 Unspent,Root Multisig,Root Multisig,USDC,0.0,0.0

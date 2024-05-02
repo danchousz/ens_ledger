@@ -1,4 +1,4 @@
-Quarter,From,To,Symbol,Value,DOT_USD
+Quarter,From_category,To_category,Symbol,Value,DOT_USD
 2021 Q4,Root Multisig,DAO Wallet,ETH,4369.256902770583,19436595.63940591
 2021 Q4,Root Multisig,DAO Wallet,USDC,10318098.311236,10302183.2
 2021 Q4,ENS Wallet,DAO Wallet,ENS,4999999.999999999,0.0
