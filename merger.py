@@ -89,10 +89,14 @@ def merge_txs(df1, df2):
 
 # Function assigning names to wallets
 def identify_wallets(df, wallets_dict, txs_dict, folder_name):
-    df['From'] = df['From'].apply(lambda address: 
-                    wallets_dict.get(address, address))      # Replacement based on the location of the wallet
-    df['To'] = df['To'].apply(lambda address:                # in the 'ens_wallets' category. Read more: readme
-                    wallets_dict.get(address, address))
+    df['From_category'] = df['From'].apply(lambda address: 
+                    wallets_dict.get(address, (address, address))[0])     # Replacement based on the location of the wallet
+    df['To_category'] = df['To'].apply(lambda address:                    # in the 'ens_wallets' category. Read more: readme
+                    wallets_dict.get(address, (address, address))[0])
+    df['From_name'] = df['From'].apply(lambda address:
+                    wallets_dict.get(address, (address, address))[1])
+    df['To_name'] = df['To'].apply(lambda address: 
+                    wallets_dict.get(address, (address, address))[1])
 
     def replace_on_match(to, from_address, txhash):          # Replacement based on the location of the wallet
         if txhash in txs_dict:                               # in the hand made 'transactions' database. Read more: readme
@@ -102,21 +106,28 @@ def identify_wallets(df, wallets_dict, txs_dict, folder_name):
                 return to, txs_dict[txhash]
         return to, from_address
 
-    df[['To', 'From']] = df.apply(lambda row: replace_on_match
-                                  (row['To'], row['From'], row.get('Transaction Hash', '')), axis=1, result_type='expand')
+    df[['To_category', 'From_category']] = df.apply(lambda row: replace_on_match
+                                  (row['To_category'], row['From_category'], row.get('Transaction Hash', '')), axis=1, result_type='expand')
+
+    df['From_name'] = df.apply(lambda row: 
+                    row['From_category'] if row['From_name'] == row['From'] else row['From_name'], axis=1)
+    df['To_name'] = df.apply(lambda row: 
+                    row['To_category'] if row['To_name'] == row['To'] else row['To_name'], axis=1)
 
     def check_acquaintance(row):                             # Flag for further deleting unknown transactions in a grouped dataframe
-        from_known = row['From'] in wallets_dict.values() or row['From'] in txs_dict.values()
-        to_known = row['To'] in wallets_dict.values() or row['To'] in txs_dict.values()
+        from_known = any(row['From_category'] == wallet_category for wallet_category, _ in wallets_dict.values()) or row['From_category'] in txs_dict.values()
+        to_known = any(row['To_category'] == wallet_category for wallet_category, _ in wallets_dict.values()) or row['To_category'] in txs_dict.values()
         return 1 if from_known and to_known else 0
     df['Acquainted?'] = df.apply(check_acquaintance, axis=1)
 
     mask = (                                                 # The sign before the value for erc20 transactions
-        (df['From'] == folder_name) &                        # is assigned using the folder_name membership.
+        (df['From_category'] == folder_name) &               # is assigned using the folder_name membership.
         ((df['Symbol'].isin(['USDC', 'ENS']))                # Let's say DAO Wallet sent 100 USDC to Ecosystem.
         | (df['Original_WETH']))                             # The DAO Wallet ledger will have a transaction with -100 USDC 
     )                                                        # and the Ecosystem ledger will have 100 USDC.
     df.loc[mask, ['Value', 'DOT_USD']] *= -1
+
+    df = df.reindex(columns=['Transaction Hash', 'Date', 'From', 'From_name','From_category', 'To', 'To_name', 'To_category', 'Value', 'DOT_USD', 'Symbol', 'Acquainted?'])
 
     return df
 
@@ -145,7 +156,7 @@ def add_quarter(date):                                       # The sole purpose 
 # Grouping by quarter
 def group_by_quarter(df):
     df['Quarter'] = df['Date'].apply(add_quarter)
-    grouped_df = df.groupby(['Quarter', 'From', 'To', 'Symbol'], as_index=False).agg({'Value': 'sum', 'DOT_USD': 'sum'})
+    grouped_df = df.groupby(['Quarter', 'From_category', 'To_category', 'Symbol'], as_index=False).agg({'Value': 'sum', 'DOT_USD': 'sum'})
     return grouped_df
 
 # The function adds interquarter balances for the benefit of future visualization
@@ -173,8 +184,8 @@ def add_unspent_balances(grouped_df, prices_dict, folder_name):
 
             unspent_row = {
                 'Quarter': f"{quarter} Unspent",
-                'From': folder_name,
-                'To': folder_name if folder_name != "Community WG" else "Community SG",
+                'From_category': folder_name,
+                'To_category': folder_name if folder_name != "Community WG" else "Community SG",
                 'Symbol': symbol,
                 'Value': current_unspent_value,              # The balances transferring inside the wallet itself
                 'DOT_USD': unspent_dot_usd                   # Except Community WG, since it was dissolved after one Q
@@ -218,8 +229,8 @@ def finalize_and_sort_df(grouped_with_unspent_df, folder_name):
         if "Unspent" in quarter:
             sorted_df = pd.concat([sorted_df, quarter_data])
         else:
-            incoming_transactions = quarter_data[quarter_data['From'] != folder_name]
-            outgoing_transactions = quarter_data[quarter_data['From'] == folder_name]
+            incoming_transactions = quarter_data[quarter_data['From_category'] != folder_name]
+            outgoing_transactions = quarter_data[quarter_data['From_category'] == folder_name]
             incoming_sorted = incoming_transactions.sort_values(by='DOT_USD', ascending=False)
             outgoing_sorted = outgoing_transactions.sort_values(by='DOT_USD', ascending=True)
             sorted_data = pd.concat([incoming_sorted, outgoing_sorted])
@@ -236,7 +247,7 @@ def process_directories(ens_wallets, various_txs):
     quarter_dir = 'quarterly_ledgers'
     os.makedirs(quarter_dir, exist_ok=True)
 
-    wallets_dict = {address: name for name, _, address in ens_wallets}
+    wallets_dict = {address: (name, details[0] if len(details) == 1 else name) for name, _, address, *details in ens_wallets}
     txs_dict = {tx[1]: tx[0] for tx in various_txs}
     prices_dict = {pd.to_datetime(date).date(): (ens_price, eth_price) for date, ens_price, eth_price in prices}
 
@@ -256,7 +267,7 @@ def process_directories(ens_wallets, various_txs):
         named_df.to_csv(local_ledgers_file, index=False, columns=[col for col in named_df.columns if col != 'Original_WETH'])
 
         acquainted_df = named_df[named_df['Acquainted?'] == 1].copy()
-        cleaned_df = acquainted_df[(acquainted_df['From'] != 'WETH Contract') & (acquainted_df['To'] != 'WETH Contract')].copy()
+        cleaned_df = acquainted_df[(acquainted_df['From_category'] != 'WETH Contract') & (acquainted_df['To_category'] != 'WETH Contract')].copy()
         grouped_df = group_by_quarter(cleaned_df)
 
         unspent_rows_df = add_unspent_balances(grouped_df, prices_dict, folder_name)

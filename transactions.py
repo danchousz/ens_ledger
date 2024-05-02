@@ -106,6 +106,8 @@ various_txs = [
         ("PG Small Grants", "0x4571c7d091b6f26285af737fb2eaa979bfe5a18c236266ef45c699e912f248a7"), #Round 2
         ("PG Small Grants", "0xf0dc5a2bd8745c24d998c111610c8a6d297318fb79ed00053ed2055489a2a9ef"), #Round 3
         ("PG Small Grants", "0x814febb21dd76586979f5dacdd5231cc10065c006983eed09d8547dccd870969"), #Round 4
+        # Scholarship
+        ("Scholarship", "0x11bf109a0989c151aea7da5494e641ba215307e83a43480c56af785fe8b6eb5d"), #Round 1
         
 
 #Q1 2023
@@ -217,7 +219,7 @@ various_txs = [
         ("Discretionary", "0xa241c502d4563ab1c42297d8910155fc63974ba446490a7dd63a0f726e93b03c"), #General Magic
     # Public Goods
         # Large Grants
-        ("Large Grants", "0x178ee258deec25af0a362a0e7276cf4a4045d1b71c07aa2a8cdd2432f2d20ebf"), #Multisend Rotki, DAOstar, EIP-7212, Smooth, EFP
+        ("Large Grants", "0x178ee258deec25af0a362a0e7276cf4a4045d1b71c07aa2a8cdd2432f2d20ebf"), #Multisend Rotki, DAOstar, EIP-7212, Dappnode, EFP
         ("Large Grants", "0xe1698c895d81670aedd7ae07fae7b3aafe4d96618e2fad2b03b34dcb30011873"), #Gashawk
         ("Large Grants", "0x7f95347e7d2e92858d678ab5ddd1c1f2dba127920aebf27dd66d72c22b79357c"), #Multisend EFP, Revoke
         ("Large Grants", "0x2d4a1929e92fb569a3bff9e4b3fa1897b11b2bafb3a2d7b267b9c8f7d976d2ac"), #Multisend EFP, Revoke
@@ -242,12 +244,21 @@ various_txs = [
         # Support
         ("Support", "0x1aa8ea15b8e8d86f3cdbd10c6c6f09e7b75422aa2d2789793c06b3a57cc33be1"), #Marcus
     #Metagov
-        # Discretionary
-        ("Discretionary", "0xd08ed57849adb99a4165673922678f6833601d845579e18cbdb81d8e597d47fe"),
-        ("Discretionary", "0xf1cc6a0dd36daf8ca120228046a8c823ab209eeca0db9917e0c811976bce4651"),
-        ("Discretionary", "0x8f2ff4db0ca081edfb8383c6ade4a7e94db2b07531664b79c96865ea1c39f634"),
+        # DAO Tooling
+        ("DAO Tooling", "0x8f2ff4db0ca081edfb8383c6ade4a7e94db2b07531664b79c96865ea1c39f634"),
+        ("DAO Tooling", "0x1020b2f9c1fbbf85f0f9d70b1d87b579ed16ac81b19768b55b2d8f20d727c9d5"),
+        # Bylaws
+        ("Bylaws", "0xf1cc6a0dd36daf8ca120228046a8c823ab209eeca0db9917e0c811976bce4651"),
+        ("Bylaws", "0xc18aeb69142c2c156419b8ebddcedaacd270d6617b753522e51122beb04d1af3"),
         # Endowment Fees
         ("Endowment Fees", "0x4ef4b34d397e6ce1fbe1fbe3e94340dcf02d590fc9d93c7107a76282beb201c6"), #Karpatkey
+        ("Endowment Fees", "0xdd631a42ccc3762e285276043926c52b86dedbc70fa34dddd611585a38534a89"),
+        # Refund
+        ("Steward Gas Refund", "0xd08ed57849adb99a4165673922678f6833601d845579e18cbdb81d8e597d47fe"),
+        ("Refund Accidental Transfers", "0x5a5ca9f80d5953af65d271ef7e274746912b807d5220302b178142ebacff6f10"),
+        # Event
+        ("Event", "0x31c3177217dd5f7cabb11954f700fcf5dc281c89c95fb503e43e3adff2a5d10c"), 
+        ("Event", "0x656ee1a2070f30fdfe606e9c071f362293149564f6d39166537ba403f73e8513"),
     #Public Goods
         # Translators
         ("Translators", "0x268e6299a5f02e98ee8f42ed60c8fb51e82c216200cfd058755dbdf972327c15"),
@@ -266,16 +277,6 @@ various_txs = [
         ("Support", "0xec6fd254700621353c0d84724d02a8219df6d0b5ae85589fb252b411c9b7c3eb"), #Marcus
         ("Support", "0x79170c91ec172e20ae5942549c28eec7eb503ca8c16d30edf92d1b23e4a04599"), #Marcus
     #Metagov
-        # Endowment Fees
-        ("Endowment Fees", "0xdd631a42ccc3762e285276043926c52b86dedbc70fa34dddd611585a38534a89"),
-        # DAO Tooling
-        ("DAO Tooling", "0x1020b2f9c1fbbf85f0f9d70b1d87b579ed16ac81b19768b55b2d8f20d727c9d5"),
-        # Discretionary
-        ("Discretionary", "0xc18aeb69142c2c156419b8ebddcedaacd270d6617b753522e51122beb04d1af3"),
-        ("Discretionary", "0x31c3177217dd5f7cabb11954f700fcf5dc281c89c95fb503e43e3adff2a5d10c"), 
-        ("Discretionary", "0x656ee1a2070f30fdfe606e9c071f362293149564f6d39166537ba403f73e8513"),
-        #Refund
-        ("Refund Accidental Transfers", "0x5a5ca9f80d5953af65d271ef7e274746912b807d5220302b178142ebacff6f10"),
     #Public Goods
         #Steward Compensation
         ("Steward Compensation", "0xf36d881806444f464a2b648183d8530e3455636cd1294206e307c6829ec8385f"),
