@@ -1,5 +1,5 @@
-import pandas as pd
 import os
+import pandas as pd
 from glob import glob
 
 from ens_wallets import ens_wallets
@@ -68,6 +68,7 @@ def process_internal_txs(internal_file):
     }
     df.rename(columns=col_to_rename, inplace=True)
 
+    df['Date'] = pd.to_datetime(df['Date']).dt.date
     df['Symbol'] = 'ETH'
 
     return df
@@ -89,6 +90,20 @@ def merge_txs(df1, df2):
 
 # Function assigning names to wallets
 def identify_wallets(df, wallets_dict, txs_dict, folder_name):
+
+    def replace_on_match(to, from_address, txhash):          # Replacement based on the location of the wallet
+        if txhash in txs_dict:                               # in the hand made 'transactions' database. Read more: readme
+            if folder_name == from_address:
+                return txs_dict[txhash], from_address
+            else:
+                return to, txs_dict[txhash]
+        return to, from_address
+    
+    def check_acquaintance(row):                             # Flag for further deleting unknown transactions in a grouped dataframe
+        from_known = any(row['From_category'] == wallet_category for wallet_category, _ in wallets_dict.values()) or row['From_category'] in txs_dict.values()
+        to_known = any(row['To_category'] == wallet_category for wallet_category, _ in wallets_dict.values()) or row['To_category'] in txs_dict.values()
+        return 1 if from_known and to_known else 0
+    
     df['From_category'] = df['From'].apply(lambda address: 
                     wallets_dict.get(address, (address, address))[0])     # Replacement based on the location of the wallet
     df['To_category'] = df['To'].apply(lambda address:                    # in the 'ens_wallets' category. Read more: readme
@@ -98,14 +113,6 @@ def identify_wallets(df, wallets_dict, txs_dict, folder_name):
     df['To_name'] = df['To'].apply(lambda address: 
                     wallets_dict.get(address, (address, address))[1])
 
-    def replace_on_match(to, from_address, txhash):          # Replacement based on the location of the wallet
-        if txhash in txs_dict:                               # in the hand made 'transactions' database. Read more: readme
-            if folder_name == from_address:
-                return txs_dict[txhash], from_address
-            else:
-                return to, txs_dict[txhash]
-        return to, from_address
-
     df[['To_category', 'From_category']] = df.apply(lambda row: replace_on_match
                                   (row['To_category'], row['From_category'], row.get('Transaction Hash', '')), axis=1, result_type='expand')
 
@@ -113,11 +120,6 @@ def identify_wallets(df, wallets_dict, txs_dict, folder_name):
                     row['From_category'] if row['From_name'] == row['From'] else row['From_name'], axis=1)
     df['To_name'] = df.apply(lambda row: 
                     row['To_category'] if row['To_name'] == row['To'] else row['To_name'], axis=1)
-
-    def check_acquaintance(row):                             # Flag for further deleting unknown transactions in a grouped dataframe
-        from_known = any(row['From_category'] == wallet_category for wallet_category, _ in wallets_dict.values()) or row['From_category'] in txs_dict.values()
-        to_known = any(row['To_category'] == wallet_category for wallet_category, _ in wallets_dict.values()) or row['To_category'] in txs_dict.values()
-        return 1 if from_known and to_known else 0
     df['Acquainted?'] = df.apply(check_acquaintance, axis=1)
 
     mask = (                                                 # The sign before the value for erc20 transactions
@@ -131,27 +133,49 @@ def identify_wallets(df, wallets_dict, txs_dict, folder_name):
 
     return df
 
-def add_quarter(date):                                       # The sole purpose of this feature is to move the very first
-    if date.year == 2022:                                    # working group funding from 2022Q1 to 2022Q2.
-        month, day = date.month, date.day
+def add_quarter(date):         
+    year, month, day = date.year, date.month, date.day       # The sole purpose of this feature is to move the very first
+    if year == 2022:                                         # working group funding from 2022Q1 to 2022Q2.
         if (month < 3) or (month == 3 and day < 31):
-            return f'{date.year} Q1'
+            return f'{year}Q1'
         elif (month == 3 and day == 31) or (month > 3 and month < 7):
-            return f'{date.year} Q2'
+            return f'{year}Q2'
         elif (month > 6 and month < 10):                     
-            return f'{date.year} Q3'                         # The transaction was made on March 31 and this fact would
+            return f'{year}Q3'                               # The transaction was made on March 31 and this fact would
         else:                                                # have a negative impact on the visualization.
-            return f'{date.year} Q4'
+            return f'{year}Q4'
     else:
-        month = date.month
         if month in (1, 2, 3):
-            return f'{date.year} Q1'
+            return f'{year}Q1'
         elif month in (4, 5, 6):
-            return f'{date.year} Q2'
+            return f'{year}Q2'
         elif month in (7, 8, 9):
-            return f'{date.year} Q3'
+            return f'{year}Q3'
         else:
-            return f'{date.year} Q4'
+            return f'{year}Q4'
+        
+def get_quarter_end_date(date):
+    if not pd.isna(date):
+        year, month, day = date.year, date.month, date.day
+        if year == 2022:
+            if month <= 3:
+                return pd.Timestamp(f'{year}-03-30')
+            elif month <= 6:
+                return pd.Timestamp(f'{year}-06-30')
+            elif month <= 9:
+                return pd.Timestamp(f'{year}-09-30')
+            else:
+                return pd.Timestamp(f'{year}-12-31')
+        else:
+            if month <= 3:
+                return pd.Timestamp(f'{year}-03-31')
+            elif month <= 6:
+                return pd.Timestamp(f'{year}-06-30')
+            elif month <= 9:
+                return pd.Timestamp(f'{year}-09-30')
+            else:
+                return pd.Timestamp(f'{year}-12-31')
+    return None
 
 # Grouping by quarter
 def group_by_quarter(df):
@@ -219,6 +243,184 @@ def get_unspent_date(quarter, prices_dict):
 
     return closest_date
 
+def calculate_interquarter_balances(df, wallet):
+    df['Date'] = pd.to_datetime(df['Date'])
+    quarters = df['Date'].apply(get_quarter_end_date).unique()
+    interquarter_balances = []
+
+    for quarter_end in quarters:
+        quarter_df = df[df['Date'] <= quarter_end]
+        for symbol in quarter_df['Symbol'].unique():
+            from_balance = quarter_df[(quarter_df['Symbol'] == symbol) & (quarter_df['From_category'] == wallet)]['Value'].sum()
+            to_balance = quarter_df[(quarter_df['Symbol'] == symbol) & (quarter_df['To_category'] == wallet)]['Value'].sum()
+            net_balance = to_balance + from_balance
+
+            from_usd = quarter_df[(quarter_df['Symbol'] == symbol) & (quarter_df['From_category'] == wallet)]['DOT_USD'].sum()
+            to_usd = quarter_df[(quarter_df['Symbol'] == symbol) & (quarter_df['To_category'] == wallet)]['DOT_USD'].sum()
+            net_usd = to_usd + from_usd
+
+            if net_balance != 0:
+                interquarter_balances.append({
+                    'Transaction Hash': 'Interquarter',
+                    'Date': quarter_end,
+                    'From': wallet,
+                    'From_name': wallet,
+                    'From_category': wallet,
+                    'To': wallet,
+                    'To_name': wallet,
+                    'To_category': wallet,
+                    'Value': net_balance,
+                    'DOT_USD': net_usd,
+                    'Symbol': symbol,
+                    'Acquainted?': 1
+                })
+
+    return pd.DataFrame(interquarter_balances)
+
+# Function to combine local ledgers, remove duplicates and add interquarter balances
+def combine_local_ledgers(local_ledgers_dir, prices_dict, wallets_dict):
+    all_files = glob(os.path.join(local_ledgers_dir, '*.csv'))
+    combined_df = pd.DataFrame()
+
+    for file in all_files:
+        df = pd.read_csv(file)
+        if 'From_category' not in df.columns or 'To_category' not in df.columns:
+            continue 
+        df['Date'] = pd.to_datetime(df['Date'])
+        df = df[(df['From_category'] != 'WETH Contract') & (df['To_category'] != 'WETH Contract')].copy()
+        
+        wallet_name = os.path.splitext(os.path.basename(file))[0]
+        interquarter_df = calculate_interquarter_balances(df, wallet_name)
+        df = pd.concat([df, interquarter_df])
+        combined_df = pd.concat([combined_df, df])
+
+    combined_df['Value'] = combined_df['Value'].abs()
+    combined_df['DOT_USD'] = combined_df['DOT_USD'].abs()
+
+    combined_df = combined_df[combined_df['Acquainted?'] == 1]
+
+    swap_wallets = {name for name, type_, address, *_ in ens_wallets if type_ == 'Swap'}
+    combined_df = combined_df[~(combined_df['To_name'].isin(swap_wallets) | combined_df['From_name'].isin(swap_wallets))]
+
+    combined_df = combined_df[~(
+        ((combined_df['From_name'] == 'Endowment') | (combined_df['To_name'] == 'Endowment')) & 
+        ((combined_df['From_category'] != 'Endowment Fees') & (combined_df['To_category'] != 'Endowment Fees'))
+    )]
+
+    names_to_remove = ['Token Timelock', 'slobo.eth', 'capitulation.eth', 'Disperse.app', 'ETHGlobal']
+    combined_df = combined_df[~combined_df['From_name'].isin(names_to_remove)]
+
+    combined_df = combined_df[~((combined_df['Transaction Hash'] != 'Interquarter') & 
+                           (combined_df['Transaction Hash'] != 'Stream') & 
+                           combined_df.duplicated(subset=['Transaction Hash', 'From', 'To', 'Value'], keep='first'))]
+
+    combined_df['Quarter'] = combined_df['Date'].apply(add_quarter)
+
+    combined_df.reset_index(drop=True, inplace=True)
+
+    rows_to_add = []
+    wallet_names = set(os.path.splitext(os.path.basename(file))[0] for file in all_files)
+
+    for quarter in combined_df['Quarter'].unique():
+        for wallet in wallet_names:
+            interquarter_mask = (
+                (combined_df['From_category'] == wallet) &
+                (combined_df['To_category'] == wallet) &
+                (combined_df['Transaction Hash'] == 'Interquarter') &
+                (combined_df['Quarter'] == quarter)
+            )
+            if interquarter_mask.any():
+                last_interquarter_idx = combined_df[interquarter_mask].index[-1]
+                last_interquarter_row = combined_df.loc[last_interquarter_idx]
+
+                rows_to_add.append({
+                    'Transaction Hash': 'Interquarter',
+                    'Date': last_interquarter_row['Date'],
+                    'From': 'Plchld',
+                    'From_name': wallet,
+                    'From_category': 'Plchld',
+                    'To': 'Plchld',
+                    'To_name': 'Plchld',
+                    'To_category': 'Plchld',
+                    'Value': 1 if wallet == 'DAO Wallet' else 0,
+                    'DOT_USD': 1 if wallet == 'DAO Wallet' else 0,
+                    'Symbol': 'Plchld',
+                    'Acquainted?': 'Plchld',
+                    'Quarter': last_interquarter_row['Quarter']
+                })
+
+    combined_df = pd.concat([combined_df, pd.DataFrame(rows_to_add)], ignore_index=True)
+
+    def sort_key(row):
+        from_name = row['From_name']
+        to_name = row['To_name']
+        dot_usd = row['DOT_USD']
+        transaction_hash = row['Transaction Hash']
+        quarter = row['Quarter']
+        date = row['Date']
+
+        if transaction_hash == 'Interquarter':
+            if from_name == 'ENS Multisig' or to_name == 'ENS Multisig':
+                return (quarter, 1, -dot_usd, date)
+            elif from_name == 'Root Multisig' or to_name == 'Root Multisig':
+                return (quarter, 4, -dot_usd, date)
+            elif from_name == 'DAO Wallet' or to_name == 'DAO Wallet':
+                return (quarter, 7, -dot_usd, date)
+            elif from_name == 'Ecosystem' or to_name == 'Ecosystem':
+                return (quarter, 10, -dot_usd, date)
+            elif from_name == 'Public Goods' or to_name == 'Public Goods':
+                return (quarter, 13, -dot_usd, date)
+            elif from_name == 'Metagov' or to_name == 'Metagov':
+                return (quarter, 16, -dot_usd, date)
+            elif from_name == 'Community WG' or to_name == 'Community WG':
+                return (quarter, 19, -dot_usd, date)
+            elif from_name == 'Service Providers' or to_name == 'Service Providers':
+                return (quarter, 22, -dot_usd, date)
+        elif transaction_hash == 'Interquarter' and to_name == 'Plchld':
+            return (quarter, 7.5, -dot_usd, date)
+        elif to_name == 'ENS Multisig':
+            return (quarter, 2, -dot_usd, date)
+        elif from_name == 'ENS Multisig':
+            return (quarter, 3, -dot_usd, date)
+        elif to_name == 'Root Multisig':
+            return (quarter, 5, -dot_usd, date)
+        elif from_name == 'Root Multisig':
+            return (quarter, 6, -dot_usd, date)
+        elif to_name == 'DAO Wallet':
+            return (quarter, 8, -dot_usd, date)
+        elif from_name == 'DAO Wallet':
+            if to_name in ['Ecosystem', 'Public Goods', 'Metagov', 'Community WG', 'Service Providers']:
+                return (quarter, 11 + ['Ecosystem', 'Public Goods', 'Metagov', 'Community WG', 'Service Providers'].index(to_name) * 3, -dot_usd, date)
+            else:
+                return (quarter, 9, -dot_usd, date)
+        elif from_name == 'Ecosystem':
+            return (quarter, 12, -dot_usd, date)
+        elif from_name == 'Public Goods':
+            return (quarter, 15, -dot_usd, date)
+        elif from_name == 'Metagov':
+            return (quarter, 18, -dot_usd, date)
+        elif from_name == 'Community WG':
+            return (quarter, 21, -dot_usd, date)
+        elif from_name == 'Service Providers':
+            return (quarter, 24, -dot_usd, date)
+
+        return (quarter, 25, -dot_usd, date)
+
+    combined_df['sort_key'] = combined_df.apply(sort_key, axis=1)
+    combined_df.sort_values(by=['Quarter', 'sort_key'], inplace=True)
+
+    combined_df.loc[
+        (combined_df['Transaction Hash'] == 'Interquarter') & (combined_df['To_name'] == 'Plchld'), 
+        ['Transaction Hash', 'From_name']
+    ] = combined_df.loc[
+        (combined_df['Transaction Hash'] == 'Interquarter') & (combined_df['To_name'] == 'Plchld'), 
+        ['From_name', 'From']
+    ].values
+
+    combined_df.drop(columns=['sort_key'], inplace=True)
+
+    combined_df.to_csv('d_ledgers.csv', index=False)
+
 # Function for sorting quarterly costs. They are not presented in order of date of execution, but in In descending order of amounts.
 def finalize_and_sort_df(grouped_with_unspent_df, folder_name):
     sorted_df = pd.DataFrame()
@@ -276,5 +478,7 @@ def process_directories(ens_wallets, various_txs):
 
         grouped_file = os.path.join(quarter_dir, f'{folder_name}_q.csv')
         final_df.to_csv(grouped_file, index=False)
+
+    combine_local_ledgers(local_ledgers_dir, prices_dict, wallets_dict)
 
 process_directories(ens_wallets, various_txs)
