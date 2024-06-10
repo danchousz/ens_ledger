@@ -9,7 +9,7 @@ ens_wallets = [
     # Pre-DAO and DAO wallets
     ("DAO Wallet", "Treasury Consolidator", "0xfe89cc7abb2c4183683ab71653c4cdc9b02d44b7"),
     ("ENS Multisig", "Treasury Consolidator", "0x911143d946ba5d467bfc476491fdb235fef4d667"),
-    ("Root Multisig", "Treasury Consolidators", "0xcf60916b6cb4753f58533808fa610fcbd4098ec0"),
+    ("Root Multisig", "Treasury Consolidator", "0xcf60916b6cb4753f58533808fa610fcbd4098ec0"),
 
     # Working Groups
     ("Ecosystem", "Payment Account", "0x2686a8919df194aa7673244549e68d42c1685d03"),
@@ -19,7 +19,7 @@ ens_wallets = [
 
     # ENSLabs
     ("ENS Wallet", "Endpoint", "0x0904dac3347ea47d208f3fd67402d039a3b99859"),
-    ("Cold Wallet (ENS Labs)", "Endpoint", "0x690f0581ececcf8389c223170778cd9d029606f2"),
+    ("ENS Labs", "Endpoint", "0x690f0581ececcf8389c223170778cd9d029606f2"),
 
     # Timelock
     ("Token Timelock", "Endpoint", "0xc18360217d8f7ab5e7c516566761ea12ce7f9d72"),
@@ -53,7 +53,6 @@ ens_wallets = [
     ("Endowment", "Endpoint", "0x4f2083f5fbede34c2714affb3105539775f7fe64"),
 
     # SPS
-    ("Service Providers", "Endpoint", "0x1ba8603da702602a8657980e825a6daa03dee93a"),
     ("Service Providers", "Endpoint", "0x1d65c6d3ad39d454ea8f682c49ae7744706ea96d"),
 
     # Contractors
@@ -66,7 +65,7 @@ ens_wallets = [
     ("Tally", "Endpoint", "0x7e90e03654732abedf89faf87f05bcd03aceefdc"),
     ("ENSTooling", "Endpoint", "0x95b564f3b3bae3f206aa418667ba000afafacc8a"),
     ("Eth.limo", "Endpoint", "0xb352bb4e2a4f27683435f153a259f1b207218b1b"),
-    ("Capitulation.eth", "Endpoint", "0x2e294d056852efc603d65ca5704e011f1bd5990c"),
+    ("capitulation.eth", "Endpoint", "0x2e294d056852efc603d65ca5704e011f1bd5990c"),
     ("Disperse.app", "Endpoint", "0xd152f549545093347a162dce210e7293f1452150"),
     ("Lemma", "Endpoint", "0xbfac54d6f255aef6e459656944d466174464fcbf"),
     ("andrewpage.eth", "Endpoint", "0x16be8cfbed38582aad0eaa6e8f2adb199152fb6a"),
@@ -120,6 +119,7 @@ ens_wallets = [
     ("andinolabs.eth", "Endpoint", "0xb6a56aed2493f5b2e26aff477d473f0702783525"),
     ("Greenpill", "Endpoint", "0x62101902aa08d00b1d3d2e66cd77e2a4f4d18c51"),
     ("wslyvh.eth", "Endpoint", "0x8289432acd5eb0214b1c2526a5edb480aa06a9ab"),
+    ("wslyvh.eth", "Endpoint", "0xd0dd053392db676d57317cd4fe96fc2ccf42d0b4"),
     ("0xlucas.eth", "Endpoint", "0x55aed0ce035883626e536254dda2f23a5b5d977f"),
     ("ethdaily.eth", "Endpoint", "0xeb40a065854bd90126a4e697aea0976ba51b2ee7"),
     ("MetaGame", "Endpoint", "0xb53b0255895c4f9e3a185e484e5b674bccfbc076"),
@@ -204,8 +204,19 @@ ens_wallets = [
     ("Tally", "Endpoint", "0x7e90e03654732abedf89faf87f05bcd03aceefdc"),
     ("ENSTooling", "Endpoint", "0x95b564f3b3bae3f206aa418667ba000afafacc8a"),
     ("Eth.limo", "Endpoint", "0xb352bb4e2a4f27683435f153a259f1b207218b1b"),
-
-
+    ("Socket", "Endpoint", "0x3a23f943181408eac424116af7b7790c94cb97a5"),
+    ("aynieducativo.eth", "Endpoint", "0x2d85f8682f3dbae9c65db9e7ba239e4de733d8d1"),
+    ("aynieducativo.eth", "Endpoint", "0xe9418b33ce595b2a305501194229700c712e6ea1"),
+    ("modularcrypto.eth", "Endpoint", "0x83897407f193e2736912b191cc0d98ff53ea5533"),
+    ("bloomnetwork.eth", "Endpoint", "0x5219ffb88175588510e9752a1ecaa3cd217ca783"),
+    ("daveytea.eth", "Endpoint", "0xd48fbaf788ee2831086f074c208cd90269ead050"),
+    ("dhive.eth", "Endpoint", "0xbc7797319b3ed4246c7078cc4e8b28ea2c6872d0"),
+    ("bloomnetwork.eth", "Endpoint", "0xe6829705c43530973c9a9394513a18e6a60ea22a"),
+    ("glodollar.eth", "Endpoint", "0x2c844b941c67b24c799fd43bad117cdf7f23ef81"),
+    ("ethdaily.eth", "Endpoint", "0xd58bf63c2a565dced209d608c240463f5f3982e9"),
+    ("illuminated.eth", "Endpoint", "0xd39a979841623a4731fd41b0ba72262f7cc9667c"),
+    ("blockful.eth", "Endpoint", "0x000ee9a6bcec9aadcc883bd52b2c9a75fb098991"),
+    ("Fluidkey", "Endpoint", "0x1ba8603da702602a8657980e825a6daa03dee93a"),
 
     # Translators
     ("sefu.eth", "Endpoint", "0x905296ed6411d92165349b468ca838d83fe96ae4"),
@@ -225,39 +236,39 @@ ens_wallets = [
 
 
     # Stewards
-    ("Steward Compensation", "Steward", "0xa21875a467b43b63af15a712c3627a70798588fc", "5pence.eth"),
-    ("Steward Compensation", "Steward", "0x1d921dff757610fbdb0073479e12c0a07d382677", "vegayp.eth"),
-    ("Steward Compensation", "Steward", "0x3dbbd0fd05edcb3adc5b7f8f1c758ea36d22e1e4", "simona.eth"),
-    ("Steward Compensation", "Steward", "0xd2cc2e47c2aecd01c87b83290c0ee76ba67a7211", "coltron.eth"),
-    ("Steward Compensation", "Steward", "0x60dbf50076206f60bcc2edf9295f5734561b8d77", "estmcmxci.eth"),
-    ("Steward Compensation", "Steward", "0xea5c280f4328493b95962d5a0321d5f60cdff38c", "avsa.eth"),
-    ("Steward Compensation", "Steward", "0xaa7a0fff587b5b75bf8c86f838ea74786e0c4930", "limes.eth"),
-    ("Steward Compensation", "Steward", "0x80ffe5f0f3e38cbd31e6f00b9423fb93bbb1a57d", "184.eth"),
-    ("Steward Compensation", "Steward", "0xb1c376b6a13fc92009b4b512c46a872c62770ab0", "daemon.eth"),
-    ("Steward Compensation", "Steward", "0xb9a0fb254aea7bcec79c7bd8052dcd902a5388ff", "slobo.eth"),
-    ("Steward Compensation", "Steward", "0xb3a880d667fb664a7e4929f83002b4bad0321653", "anthonyware.eth"),
-    ("Steward Compensation", "Steward", "0x48a63097e1ac123b1f5a8bbffafa4afa8192fab0", "ceresstation.eth"),
-    ("Steward Compensation", "Steward", "0x521aacb43d89e1b8ffd64d9ef76b0a1074dedaf8", "bobjiang.eth"),
-    ("Steward Compensation", "Steward", "0x54becc7560a7be76d72ed76a1f5fee6c5a2a7ab6", "simona.eth"),
-    ("Steward Compensation", "Steward", "0x4bf91763cea52fe111c26e43c5936886583c5a37", "estmcmxci.eth"),
-    ("Steward Compensation", "Steward", "0x7024e5e2241ee7c6d09048547a410a3c4294b884", "katherineykwu.eth"),
-    ("Steward Compensation", "Steward", "0xf413a13c4f2c213ee403eef16eff41d29a907222", "5pence.eth"),
-    ("Steward Compensation", "Steward", "0xc28de09ad1a20737b92834943558ddfcc88d020d", "184.eth"),
-    ("Steward Compensation", "Steward", "0xa1455e19c297b9a0a0e894208d041ad40cc5c23d", "yambo.eth"),
-    ("Steward Compensation", "Steward", "0x534631bcf33bdb069fb20a93d2fdb9e4d4dd42cf", "slobo.eth"),
-    ("Steward Compensation", "Steward", "0x67c5be64c6c49d2d5269b06d04b0fbe520fc5313", "coltron.eth"),
-    ("Steward Compensation", "Steward", "0xaeecabd08546834d8d1e11c33401185fd8351d0a", "ndovu.eth"),
-    ("Steward Compensation", "Steward", "0xe52c39327ff7576baec3dbfef0787bd62db6d726", "5pence.eth"),
-    ("Steward Compensation", "Steward", "0xa7860e99e3ce0752d1ac53b974e309fff80277c6", "limes.eth"),
-    ("Steward Compensation", "Steward", "0xa8c1193bd37a0442f0c0c7bf19558a8eaa130497", "limes.eth"),
-    ("Steward Compensation", "Steward", "0x1213da60935679d412ef6fc512642e6f83988ec1", "ginge.eth"),
-    ("Steward Compensation", "Steward", "0x3e1b0f0edf6563be7be0608a797f39e727483412", "sumedha.eth"),
-    ("Steward Compensation", "Steward", "0x48dbb9b7b562acf3c38e53deaff4686e24c3d85d", "spencecoin.eth"),
-    ("Steward Compensation", "Steward", "0x82eb45562f991329ed2867f43fc60f0ba52c3dab", "validator.eth"),
-    ("Steward Compensation", "Steward", "0x70b8769b09af7447886620c20854c8b9119b5fee", "limes.eth"),
-    ("Steward Compensation", "Steward", "0xb8c2c29ee19d8307cb7255e1cd9cbde883a267d5", "nick.eth"),
-    ("Steward Compensation", "Steward", "0x0b8b1ed2594b36aedbf44dd17674f4686edfee6b", "5pence.eth"),
-    ("Steward Compensation", "Steward", "0x730991197e1a832b7ec07cff1387d3f1064a3f8c", "coltron.eth"),
+    ("Compensation", "Steward", "0xa21875a467b43b63af15a712c3627a70798588fc", "5pence.eth"),
+    ("Compensation", "Steward", "0x1d921dff757610fbdb0073479e12c0a07d382677", "vegayp.eth"),
+    ("Compensation", "Steward", "0x3dbbd0fd05edcb3adc5b7f8f1c758ea36d22e1e4", "simona.eth"),
+    ("Compensation", "Steward", "0xd2cc2e47c2aecd01c87b83290c0ee76ba67a7211", "coltron.eth"),
+    ("Compensation", "Steward", "0x60dbf50076206f60bcc2edf9295f5734561b8d77", "estmcmxci.eth"),
+    ("Compensation", "Steward", "0xea5c280f4328493b95962d5a0321d5f60cdff38c", "avsa.eth"),
+    ("Compensation", "Steward", "0xaa7a0fff587b5b75bf8c86f838ea74786e0c4930", "limes.eth"),
+    ("Compensation", "Steward", "0x80ffe5f0f3e38cbd31e6f00b9423fb93bbb1a57d", "184.eth"),
+    ("Compensation", "Steward", "0xb1c376b6a13fc92009b4b512c46a872c62770ab0", "daemon.eth"),
+    ("Compensation", "Steward", "0xb9a0fb254aea7bcec79c7bd8052dcd902a5388ff", "slobo.eth"),
+    ("Compensation", "Steward", "0xb3a880d667fb664a7e4929f83002b4bad0321653", "anthonyware.eth"),
+    ("Compensation", "Steward", "0x48a63097e1ac123b1f5a8bbffafa4afa8192fab0", "ceresstation.eth"),
+    ("Compensation", "Steward", "0x521aacb43d89e1b8ffd64d9ef76b0a1074dedaf8", "bobjiang.eth"),
+    ("Compensation", "Steward", "0x54becc7560a7be76d72ed76a1f5fee6c5a2a7ab6", "simona.eth"),
+    ("Compensation", "Steward", "0x4bf91763cea52fe111c26e43c5936886583c5a37", "estmcmxci.eth"),
+    ("Compensation", "Steward", "0x7024e5e2241ee7c6d09048547a410a3c4294b884", "katherineykwu.eth"),
+    ("Compensation", "Steward", "0xf413a13c4f2c213ee403eef16eff41d29a907222", "5pence.eth"),
+    ("Compensation", "Steward", "0xc28de09ad1a20737b92834943558ddfcc88d020d", "184.eth"),
+    ("Compensation", "Steward", "0xa1455e19c297b9a0a0e894208d041ad40cc5c23d", "yambo.eth"),
+    ("Compensation", "Steward", "0x534631bcf33bdb069fb20a93d2fdb9e4d4dd42cf", "slobo.eth"),
+    ("Compensation", "Steward", "0x67c5be64c6c49d2d5269b06d04b0fbe520fc5313", "coltron.eth"),
+    ("Compensation", "Steward", "0xaeecabd08546834d8d1e11c33401185fd8351d0a", "ndovu.eth"),
+    ("Compensation", "Steward", "0xe52c39327ff7576baec3dbfef0787bd62db6d726", "5pence.eth"),
+    ("Compensation", "Steward", "0xa7860e99e3ce0752d1ac53b974e309fff80277c6", "limes.eth"),
+    ("Compensation", "Steward", "0xa8c1193bd37a0442f0c0c7bf19558a8eaa130497", "limes.eth"),
+    ("Compensation", "Steward", "0x1213da60935679d412ef6fc512642e6f83988ec1", "ginge.eth"),
+    ("Compensation", "Steward", "0x3e1b0f0edf6563be7be0608a797f39e727483412", "sumedha.eth"),
+    ("Compensation", "Steward", "0x48dbb9b7b562acf3c38e53deaff4686e24c3d85d", "spencecoin.eth"),
+    ("Compensation", "Steward", "0x82eb45562f991329ed2867f43fc60f0ba52c3dab", "validator.eth"),
+    ("Compensation", "Steward", "0x70b8769b09af7447886620c20854c8b9119b5fee", "limes.eth"),
+    ("Compensation", "Steward", "0xb8c2c29ee19d8307cb7255e1cd9cbde883a267d5", "nick.eth"),
+    ("Compensation", "Steward", "0x0b8b1ed2594b36aedbf44dd17674f4686edfee6b", "5pence.eth"),
+    ("Compensation", "Steward", "0x730991197e1a832b7ec07cff1387d3f1064a3f8c", "coltron.eth"),
 
     # Swaps
     ("WETH Contract", "Swap", "0xc02aaa39b223fe8d0a0e5c4f27ead9083c756cc2"),

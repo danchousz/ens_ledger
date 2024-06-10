@@ -119,7 +119,7 @@ various_txs = [
         # Small Grants
         ("PG Small Grants", "0xe9558ab94709edf707861bd7e55b50b73da9ee64d1ffff1cb92736f9a73d6a57"), #Round 5
         # Hackathons
-        ("Hackatons ", "0x3dae72cc248fcf2cc529ec9325f674d0899547db4a54455a7436aa0048b7e2fc"),
+        ("Hackathons", "0x3dae72cc248fcf2cc529ec9325f674d0899547db4a54455a7436aa0048b7e2fc"),
 
 
 #Q2 2023
@@ -181,7 +181,7 @@ various_txs = [
         # Small Grants
         ("PG Small Grants", "0xeadf737b591b5038791f9021653ef3c44f31a0af76bcf5dfb8369855b0d07431"), #Round 9
         # Hackathons
-        ("Hackatons ", "0xd99c1688de7a5d125dcb3b28d32c0a2aeee54f162c8ff7e151dd3ac46264897d"),
+        ("Hackathons", "0xd99c1688de7a5d125dcb3b28d32c0a2aeee54f162c8ff7e151dd3ac46264897d"),
 
 #Q4 2023
     # Ecosystem
@@ -231,8 +231,8 @@ various_txs = [
         # Translators
         ("Translators", "0xd461abe7355a120e06332598e5bfa1a3ce5cc158c8c5fdc1cd74fb30e0ee2da7"),
         # Hackathons
-        ("Hackatons ", "0x98abd61960644dfeb50be9b1b503dc280a0584123e700631751b38fea1c439ee"),
-        ("Hackatons ", "0xab71fc44ea9c169bad3f84eee474b57e64680757a7eac566c2cccc28ec02c516"),
+        ("Hackathons", "0x98abd61960644dfeb50be9b1b503dc280a0584123e700631751b38fea1c439ee"),
+        ("Hackathons", "0xab71fc44ea9c169bad3f84eee474b57e64680757a7eac566c2cccc28ec02c516"),
 
 
 #Q1 2024
@@ -264,7 +264,7 @@ various_txs = [
         ("Translators", "0x268e6299a5f02e98ee8f42ed60c8fb51e82c216200cfd058755dbdf972327c15"),
         ("Translators", "0xc9457410df0e85d8efda44f4b0a5e5da6248cc5736c7d5e45a99f26015d64fe0"),
         # Hackathons
-        ("Hackatons ", "0xdc175bccc0709f414ef842008336911dfb1be6427eb51ef15ba4266056a3448e"),
+        ("Hackathons", "0xdc175bccc0709f414ef842008336911dfb1be6427eb51ef15ba4266056a3448e"),
 
 #Q2 2024
     # Ecosystem
@@ -273,11 +273,31 @@ various_txs = [
         ("Grants", "0x6c2e9b910decc2f00d4639c57f38929fec34a47ec400fdbc8fd7e60e7b2e1081"),
         ("Grants", "0xf1d16a0b4425b2b5a539e8840ca647e579e51f3b50a711677d5939e9e55082aa"),
         ("Grants", "0xd57a8a13c74df22cbd3cb072d172557fc69166a3d25913e5fb9877902b2696de"),
+        # Hackathons
+        ("Hackathons", "0xdfdeb17a2f137c4f9f9d0e7f5b69709850de6372aaf9b6e3378eaa709438c397"), #wslyvh
+        # Gitcoin Grants
+        ("Gitcoin Grants", "0xe448fed2956fa56f5da99b2039eae75864fc34c60a27458e5810ed27fed7e3f3"), #Socket
+        ("Gitcoin Grants", "0xb522b0317a9d1a2f46cab01a13608ca92eacfc606dd4433aa29c942f2acc38da"),
         # Support
         ("Support", "0xec6fd254700621353c0d84724d02a8219df6d0b5ae85589fb252b411c9b7c3eb"), #Marcus
         ("Support", "0x79170c91ec172e20ae5942549c28eec7eb503ca8c16d30edf92d1b23e4a04599"), #Marcus
     #Metagov
+        # Endowment Fees
+        ('Endowment Fees', '0xdef61eb66b78c5b6acbe4c7eaa44438d1772e885a33588a5df0ca8bd63289a59'), #Karpatkey Refund
+        # AI
+        ("AI", "0x4fce697c14b1e1310bfa2716fdffa315329ca59c13236ee39bb4f8a04255f557"),    
+        ("AI", "0xec60569895b4c6c89cee157e663487681c194e766696cc43103baf6b1ab6191b"),
+
     #Public Goods
-        #Steward Compensation
-        ("Steward Compensation", "0xf36d881806444f464a2b648183d8530e3455636cd1294206e307c6829ec8385f"),
+        # Compensation
+        ("Compensation", "0xf36d881806444f464a2b648183d8530e3455636cd1294206e307c6829ec8385f"),
+        # Grants
+        ("Grants", "0xcd7efb67ae227e26974fe86e36e03847da3f18d2b61887ddcd5ae858d88a6a42"),
+        ("Grants", "0xfd28305729281c54b602253377fe0b70949faaee3b105f20313acdf52821bd4d"),
+        ("Grants", "0x175b4384e3798b3de345281bc34cd64d29298838be5674e5ae9ad4b150e5df81"),
+        ("Grants", "0xb638b447a1d558b371ed2e3e5a50130d2c23c9b088626815b820e6e490427713"),
+        ("Grants", "0xfa88551e141a32733c4852f8ab7615ca7d72a9b3779f21cce30838226c504f0e"),
+        ("Grants", "0x78eff31104179b1140ff728f1f4773279bc4f909af7f47cb58f806240a073a67"),
+        # Small Grants
+        ("PG Small Grants", "0x54817576bf3777b49b9232836e84c7365768956872a85a545bbd13cc02f792fa")
 ]
