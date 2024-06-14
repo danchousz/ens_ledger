@@ -369,6 +369,7 @@ function createSankeyData(df, bigPicture = false, quarter = null, walletFilter, 
                             }
                             nodeX.push(startPoint + quarterNumber -  3*border);
                             nodeY.push(metagovZoneRecipient += 0.0025);
+                            communityWGZoneRecipients = communityWGZone;
                         } else if (nodeName.startsWith('Community WG')) {
                             nodeX.push(startPoint + (quarterNumber/2.5));;
                             nodeY.push(communityWGZone);
@@ -814,6 +815,7 @@ function createSankeyData(df, bigPicture = false, quarter = null, walletFilter, 
                             }
                             nodeX.push(startPoint + quarterNumber -  3*border);
                             nodeY.push(metagovZoneRecipient += 0.0025);
+                            spsZoneRecipients = spsZone;
                         } else if (receiver.startsWith('Metagov')) {
                             nodeX.push(startPoint + 2.5*border);
                             nodeY.push(metagoveZoneSenders -= 0.002)
